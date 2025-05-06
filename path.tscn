@@ -1,4 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://dtfleppjtpcv7"]
+[gd_scene load_steps=5 format=3 uid="uid://dtfleppjtpcv7"]
+
+[ext_resource type="Texture2D" uid="uid://e6esogefl1us" path="res://floor.jpg" id="1_jnavc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ckofj"]
+albedo_texture = ExtResource("1_jnavc")
 
 [sub_resource type="QuadMesh" id="QuadMesh_cnff4"]
 size = Vector2(1, 0.5)
@@ -10,6 +15,7 @@ size = Vector3(1, 0.5, 0.5)
 [node name="Path" type="StaticBody3D"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_ckofj")
 mesh = SubResource("QuadMesh_cnff4")
 skeleton = NodePath("../CollisionShape3D")
 

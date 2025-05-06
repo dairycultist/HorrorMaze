@@ -9,3 +9,6 @@ transform = Transform3D(-0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, 0
 
 [node name="PathPlacer" type="Node3D" parent="."]
 script = ExtResource("1_ulcgi")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.741587, -0.389533, -0.546181, 0.627868, 0.116252, 0.769589, -0.236286, -0.913646, 0.330786, 0, 0, 0)
