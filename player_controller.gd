@@ -1,8 +1,6 @@
 extends CharacterBody3D
 
-@export_group("Movement")
 @export var mouse_sensitivity := 0.3
-
 @export var drag := 8
 @export var accel := 50
 

@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://ds4cbgnx8gsf8"]
+
+[ext_resource type="Texture2D" uid="uid://dgyvafwhkfkt" path="res://wall.jpg" id="1_xxgf6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y4f30"]
+albedo_texture = ExtResource("1_xxgf6")
+metallic_specular = 0.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_cnff4"]
+size = Vector2(5, 3)
+center_offset = Vector3(0, 1.5, 0)
+orientation = 0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jnavc"]
+size = Vector3(1, 0.5, 3)
+
+[node name="Wall" type="StaticBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_y4f30")
+mesh = SubResource("QuadMesh_cnff4")
+skeleton = NodePath("../CollisionShape3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+shape = SubResource("BoxShape3D_jnavc")
