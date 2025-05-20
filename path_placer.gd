@@ -26,8 +26,6 @@ const PATH = preload("res://path.tscn")
 const WALL = preload("res://wall.tscn")
 
 const ROOM_DIMENSIONS : float = 5
-const PATH_LENGTH : float = 1
-const ROOM_PLUS_PATH : float = ROOM_DIMENSIONS + PATH_LENGTH
 
 func _ready() -> void:
 	
@@ -43,7 +41,7 @@ func _ready() -> void:
 			
 			var room := ROOM.instantiate()
 			add_child(room)
-			room.position = Vector3(w * ROOM_PLUS_PATH, 0, l * ROOM_PLUS_PATH)
+			room.position = Vector3(w * ROOM_DIMENSIONS, 0, l * ROOM_DIMENSIONS)
 	
 	# generaze maze array with randomized depth-first search
 	var stack = [ Vector2i(0, 0) ]
@@ -86,14 +84,14 @@ func _ready() -> void:
 			for dir_index in range(0, 4):
 				
 				var dir := dir_index_to_vec3(dir_index)
-				var room_position = Vector3i(w, 0, l) * ROOM_PLUS_PATH
+				var wall_position = (Vector3i(w, 0, l) * 2 + dir) * ROOM_DIMENSIONS / 2
 				
 				if maze_data[w][l].has(dir_index):
 				
 					# path
 					var path := PATH.instantiate()
 					add_child(path)
-					path.position = room_position + dir * (ROOM_PLUS_PATH / 2)
+					path.position = wall_position
 					path.rotation = Vector3(0, dir_index * PI / 2, 0)
 					
 				elif not within_maze_bounds(w + dir.x, l + dir.z) or not maze_data[w + dir.x][l + dir.z].has((dir_index + 2) % 4):
@@ -101,7 +99,7 @@ func _ready() -> void:
 					# wall (only if other side doesn't have path)
 					var wall := WALL.instantiate()
 					add_child(wall)
-					wall.position = room_position + dir * (ROOM_DIMENSIONS / 2)
+					wall.position = wall_position
 					wall.rotation = Vector3(0, dir_index * PI / 2, 0)
 
 func within_maze_bounds(x: int, z: int) -> bool:

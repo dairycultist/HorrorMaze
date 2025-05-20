@@ -1,20 +1,24 @@
-[gd_scene load_steps=4 format=3 uid="uid://cmis55isxt2v4"]
+[gd_scene load_steps=5 format=3 uid="uid://cmis55isxt2v4"]
 
 [ext_resource type="Script" uid="uid://c33va8hjkjvih" path="res://path_placer.gd" id="1_ulcgi"]
 [ext_resource type="Script" uid="uid://erufn1acin3g" path="res://player_controller.gd" id="2_nxogm"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ulcgi"]
 
+[sub_resource type="Environment" id="Environment_nxogm"]
+ssao_enabled = true
+fog_enabled = true
+fog_light_color = Color(0, 0, 0, 1)
+fog_density = 0.3
+
 [node name="Node3D" type="Node3D"]
 
 [node name="PathPlacer" type="Node3D" parent="."]
 script = ExtResource("1_ulcgi")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.741587, -0.389533, -0.546181, 0.627868, 0.116252, 0.769589, -0.236286, -0.913646, 0.330786, 0, 0, 0)
-
 [node name="Player" type="CharacterBody3D" parent="."]
 script = ExtResource("2_nxogm")
+accel = 30
 
 [node name="coll" type="CollisionShape3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -22,4 +26,11 @@ shape = SubResource("CapsuleShape3D_ulcgi")
 
 [node name="Camera3D" type="Camera3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-fov = 60.0
+fov = 50.0
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Player/Camera3D"]
+spot_range = 7.0
+spot_angle = 27.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_nxogm")
