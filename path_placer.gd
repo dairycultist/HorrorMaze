@@ -23,7 +23,6 @@ extends Node
 const ROOM_DIMENSIONS : float = 1.5
 const PATH_LENGTH : float = 1
 const ROOM_PLUS_PATH : float = ROOM_DIMENSIONS + PATH_LENGTH
-# gonna also need "wall," blocks off sides where there aren't paths
 
 const ROOM = preload("res://room.tscn")
 const PATH = preload("res://path.tscn")
@@ -61,14 +60,14 @@ func _ready() -> void:
 		if current.x - 1 >= 0 and not visited.has(current + Vector2i(-1, 0)):
 			possible_directions.append(0) # -x
 			
+		if current.y + 1 < maze_length and not visited.has(current + Vector2i(0, 1)):
+			possible_directions.append(1) # +y
+			
 		if current.x + 1 < maze_width and not visited.has(current + Vector2i(1, 0)):
-			possible_directions.append(1) # +x
+			possible_directions.append(2) # +x
 			
 		if current.y - 1 >= 0 and not visited.has(current + Vector2i(0, -1)):
-			possible_directions.append(2) # -y
-			
-		if current.y + 1 < maze_length and not visited.has(current + Vector2i(0, 1)):
-			possible_directions.append(3) # +y
+			possible_directions.append(3) # -y
 		
 		# push a random neighbor that hasn't already been built
 		# if you can't, pop
@@ -82,21 +81,23 @@ func _ready() -> void:
 			visited.push_back(new_position)
 			
 			maze_data[current.x][current.y].append(chosen_direction)
-			
-			var path_position_2d = current * ROOM_PLUS_PATH + dir_index_to_vec2(chosen_direction) * (ROOM_PLUS_PATH / 2)
-			var path := PATH.instantiate()
-			add_child(path)
-			path.position = Vector3(path_position_2d.x, 0, path_position_2d.y)
-			if dir_index_to_vec2(chosen_direction).y != 0:
-				path.rotation = Vector3(0, PI / 2, 0)
 	
 	# generate mesh from maze array
+	for w in range(0, maze_width):
+		for l in range(0, maze_length):
+			for dir_index in maze_data[w][l]:
+				
+				var path_position_2d = Vector2(w, l) * ROOM_PLUS_PATH + dir_index_to_vec2(dir_index) * (ROOM_PLUS_PATH / 2)
+				var path := PATH.instantiate()
+				add_child(path)
+				path.position = Vector3(path_position_2d.x, 0, path_position_2d.y)
+				path.rotation = Vector3(0, dir_index * PI / 2, 0)
 
 
 func dir_index_to_vec2(dir: int) -> Vector2i:
 	
 	match dir:
 		0: return Vector2i(-1, 0)
-		1: return Vector2i(1, 0)
-		2: return Vector2i(0, -1)
-		_: return Vector2i(0, 1)
+		1: return Vector2i(0, 1)
+		2: return Vector2i(1, 0)
+		_: return Vector2i(0, -1)
