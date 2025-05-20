@@ -12,7 +12,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	
 	# failsafe
-	if (position.y < -10):
+	if (position.y < -1):
 		position = Vector3.ZERO
 		velocity = Vector3.ZERO
 	

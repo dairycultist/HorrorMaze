@@ -7,9 +7,6 @@ extends Node
 # fast footstep sounds
 # https://www.tiktok.com/@graggl_/video/7471697355100654891
 
-# TODO LIST
-# 2. make good models for room, path, and wall
-
 # horror game where you search the dark corridors of a randomly generated maze
 # (made with randomized depth-first search) while keeping an inconsistent
 # weeping angel at bay (it makes offputting sounds)
@@ -88,24 +85,23 @@ func _ready() -> void:
 		for l in range(0, MAZE_LENGTH):
 			for dir_index in range(0, 4):
 				
-				var dir = dir_index_to_vec2(dir_index)
+				var dir := dir_index_to_vec3(dir_index)
+				var room_position = Vector3i(w, 0, l) * ROOM_PLUS_PATH
 				
 				if maze_data[w][l].has(dir_index):
 				
 					# path
-					var path_position_2d = Vector2(w, l) * ROOM_PLUS_PATH + dir * (ROOM_PLUS_PATH / 2)
 					var path := PATH.instantiate()
 					add_child(path)
-					path.position = Vector3(path_position_2d.x, 0, path_position_2d.y)
+					path.position = room_position + dir * (ROOM_PLUS_PATH / 2)
 					path.rotation = Vector3(0, dir_index * PI / 2, 0)
 					
-				elif not within_maze_bounds(w + dir.x, l + dir.y) or not maze_data[w + dir.x][l + dir.y].has((dir_index + 2) % 4):
+				elif not within_maze_bounds(w + dir.x, l + dir.z) or not maze_data[w + dir.x][l + dir.z].has((dir_index + 2) % 4):
 					
 					# wall (only if other side doesn't have path)
-					var wall_position_2d = Vector2(w, l) * ROOM_PLUS_PATH + dir * (ROOM_DIMENSIONS / 2)
 					var wall := WALL.instantiate()
 					add_child(wall)
-					wall.position = Vector3(wall_position_2d.x, 0, wall_position_2d.y)
+					wall.position = room_position + dir * (ROOM_DIMENSIONS / 2)
 					wall.rotation = Vector3(0, dir_index * PI / 2, 0)
 
 func within_maze_bounds(x: int, z: int) -> bool:
@@ -119,3 +115,11 @@ func dir_index_to_vec2(dir: int) -> Vector2i:
 		1: return Vector2i(0, 1)
 		2: return Vector2i(1, 0)
 		_: return Vector2i(0, -1)
+
+func dir_index_to_vec3(dir: int) -> Vector3i:
+	
+	match dir:
+		0: return Vector3i(-1, 0, 0)
+		1: return Vector3i(0, 0, 1)
+		2: return Vector3i(1, 0, 0)
+		_: return Vector3i(0, 0, -1)
