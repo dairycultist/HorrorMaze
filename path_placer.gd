@@ -14,6 +14,13 @@ extends Node
 
 # wall-based meshing instead of room-based (allows for large rooms!)
 
+# L flashlight https://www.google.com/search?sca_esv=b10ff84a412ec3ef&sxsrf=AHTn8zpeH9_BCvvYdI-BvLnbXVCxKFFh5Q:1747712273324&q=L+flashlight&udm=2&fbs=ABzOT_CWdhQLP1FcmU5B0fn3xuWpA-dk4wpBWOGsoR7DG5zJBsxayPSIAqObp_AgjkUGqekYoUzDaOcDDjQfK4KpR2OIJg0p8GjEafhVsU6UZNT2tUhHTA_XMhcunRVhbh9fJ-E_NpOwc0V4M-pxQ-VRkNVBLtVA39i8pg8uW6jlEtLtrbdNHgWLD-vHAmoqmNrKak2sYhiqpsjYUvt_8vhjtkMNrZWABg&sa=X&ved=2ahUKEwiXmeLJj7GNAxVAFlkFHdpVJ-8QtKgLegQIFxAB&biw=1792&bih=1031&dpr=2#vhid=UT6gFeEgkuaD7M&vssid=mosaic
+
+# sound is IMPORTANT
+# drip drip drip of a leaky ceiling
+# ambient noise!!
+# music suddenly cuts out. then rapidly approaching footsteps and heaving breaths
+
 #nah 3D maze. you're underground and you find a big metal cube
 #emerge from cramped metal corridors to slightly less cramped stone ones
 
