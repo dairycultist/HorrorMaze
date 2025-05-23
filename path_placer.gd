@@ -7,6 +7,11 @@ extends Node
 # fast footstep sounds
 # https://www.tiktok.com/@graggl_/video/7471697355100654891
 
+#weeping angel that will never willingly move into your line of sight
+#I think that's the problem with game weeping angels, they just turn the corner and just stop, so you can always just walk backwards
+#the weeping angel should try to reach you, realize it can't, and then skitter off, leaving you wondering where it went
+#maybe it waits at the corner. if it hears you try to get closer, it skitters away before you see it. if it hears you moving away, then it camps the corner until it knows you're looking away
+
 # horror game where you search the dark corridors of a randomly generated maze
 # (made with randomized depth-first search) while keeping an inconsistent
 # weeping angel at bay (it makes offputting sounds)
