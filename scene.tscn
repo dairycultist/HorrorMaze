@@ -18,13 +18,26 @@ fog_density = 0.3
 
 [node name="Node3D" type="Node3D"]
 
-[node name="MonsterCheckerViewport" type="SubViewport" parent="."]
+[node name="MonsterViewportContainer" type="SubViewportContainer" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
 
-[node name="Camera3D" type="Camera3D" parent="MonsterCheckerViewport" node_paths=PackedStringArray("anchor")]
+[node name="MonsterViewport" type="SubViewport" parent="MonsterViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 0
+
+[node name="Camera3D" type="Camera3D" parent="MonsterViewportContainer/MonsterViewport" node_paths=PackedStringArray("anchor")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-fov = 50.0
+keep_aspect = 0
+fov = 60.0
 script = ExtResource("2_u3cyc")
-anchor = NodePath("../../Player/CameraAnchor")
+anchor = NodePath("../../../Player/CameraAnchor")
 
 [node name="GameViewportContainer" type="SubViewportContainer" parent="."]
 texture_filter = 1
@@ -44,7 +57,8 @@ render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="GameViewportContainer/GameViewport" node_paths=PackedStringArray("anchor")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-fov = 50.0
+keep_aspect = 0
+fov = 60.0
 script = ExtResource("2_u3cyc")
 anchor = NodePath("../../../Player/CameraAnchor")
 
@@ -67,6 +81,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
 [node name="Flashlight" type="SpotLight3D" parent="Player/CameraAnchor"]
 spot_range = 10.0
-spot_attenuation = 0.5
-spot_angle = 20.0
+spot_attenuation = 0.3
+spot_angle = 13.0
 spot_angle_attenuation = 2.46229
