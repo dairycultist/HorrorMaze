@@ -26,15 +26,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stretch = true
-stretch_shrink = 8
 mouse_target = true
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
-size = Vector2i(144, 81)
+size = Vector2i(1152, 648)
 
 [node name="Player" type="CharacterBody3D" parent="SubViewportContainer/SubViewport"]
 script = ExtResource("2_nxogm")
-mouse_sensitivity = 2.4
 accel = 30
 
 [node name="coll" type="CollisionShape3D" parent="SubViewportContainer/SubViewport/Player"]
