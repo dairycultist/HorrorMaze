@@ -6,10 +6,16 @@ extends CharacterBody3D
 
 var camera_pitch := 0.0
 
+var flashlight_off_pitch := 0.0
+var flashlight_off_yaw := 0.0
+
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _process(delta: float) -> void:
+	
+	$Camera3D/Flashlight.rotation.x = lerp($Camera3D/Flashlight.rotation.x, flashlight_off_pitch, 10 * delta)
+	$Camera3D/Flashlight.rotation.y = lerp($Camera3D/Flashlight.rotation.y, flashlight_off_yaw, 10 * delta)
 	
 	# failsafe
 	if (position.y < -1):
@@ -29,7 +35,6 @@ func _process(delta: float) -> void:
 	
 	move_and_slide()
 
-
 func _input(event):
 	
 	if event.is_action_pressed("pause"):
@@ -46,3 +51,6 @@ func _input(event):
 		camera_pitch = clampf(camera_pitch - event.relative.y * mouse_sensitivity, -90, 90)
 		
 		$Camera3D.rotation.x = deg_to_rad(camera_pitch)
+		
+		flashlight_off_pitch = deg_to_rad(-event.relative.y * mouse_sensitivity)
+		flashlight_off_yaw = deg_to_rad(-event.relative.x * mouse_sensitivity)
