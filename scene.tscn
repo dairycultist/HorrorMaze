@@ -1,13 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://cmis55isxt2v4"]
+[gd_scene load_steps=8 format=3 uid="uid://cmis55isxt2v4"]
 
 [ext_resource type="Shader" uid="uid://b11i0xe62slng" path="res://screenspace.gdshader" id="1_3253y"]
 [ext_resource type="Script" uid="uid://c33va8hjkjvih" path="res://path_placer.gd" id="1_ulcgi"]
 [ext_resource type="Script" uid="uid://erufn1acin3g" path="res://player_controller.gd" id="2_nxogm"]
+[ext_resource type="Script" uid="uid://b44asflcpdbhe" path="res://camera_lock.gd" id="2_u3cyc"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_u3cyc"]
 shader = ExtResource("1_3253y")
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ulcgi"]
 
 [sub_resource type="Environment" id="Environment_nxogm"]
 ssao_enabled = true
@@ -15,9 +14,19 @@ fog_enabled = true
 fog_light_color = Color(0, 0, 0, 1)
 fog_density = 0.3
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ulcgi"]
+
 [node name="Node3D" type="Node3D"]
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+[node name="MonsterCheckerViewport" type="SubViewport" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="MonsterCheckerViewport" node_paths=PackedStringArray("anchor")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+fov = 50.0
+script = ExtResource("2_u3cyc")
+anchor = NodePath("../../Player/CameraAnchor")
+
+[node name="GameViewportContainer" type="SubViewportContainer" parent="."]
 texture_filter = 1
 material = SubResource("ShaderMaterial_u3cyc")
 anchors_preset = 15
@@ -28,29 +37,36 @@ grow_vertical = 2
 stretch = true
 mouse_target = true
 
-[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+[node name="GameViewport" type="SubViewport" parent="GameViewportContainer"]
+handle_input_locally = false
 size = Vector2i(1152, 648)
+render_target_update_mode = 4
 
-[node name="Player" type="CharacterBody3D" parent="SubViewportContainer/SubViewport"]
-script = ExtResource("2_nxogm")
-accel = 30
-
-[node name="coll" type="CollisionShape3D" parent="SubViewportContainer/SubViewport/Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_ulcgi")
-
-[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport/Player"]
+[node name="Camera3D" type="Camera3D" parent="GameViewportContainer/GameViewport" node_paths=PackedStringArray("anchor")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 fov = 50.0
-
-[node name="Flashlight" type="SpotLight3D" parent="SubViewportContainer/SubViewport/Player/Camera3D"]
-spot_range = 10.0
-spot_attenuation = 0.5
-spot_angle = 20.0
-spot_angle_attenuation = 2.46229
+script = ExtResource("2_u3cyc")
+anchor = NodePath("../../../Player/CameraAnchor")
 
 [node name="PathPlacer" type="Node3D" parent="."]
 script = ExtResource("1_ulcgi")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_nxogm")
+
+[node name="Player" type="CharacterBody3D" parent="."]
+script = ExtResource("2_nxogm")
+accel = 30
+
+[node name="coll" type="CollisionShape3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_ulcgi")
+
+[node name="CameraAnchor" type="Node3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="Flashlight" type="SpotLight3D" parent="Player/CameraAnchor"]
+spot_range = 10.0
+spot_attenuation = 0.5
+spot_angle = 20.0
+spot_angle_attenuation = 2.46229

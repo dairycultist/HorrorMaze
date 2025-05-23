@@ -16,7 +16,10 @@ extends Node
 # - if it hears you moving away, then it camps the corner until it knows you're looking away
 # that's the gimmick. you almost never see the angel, you can't just walk
 # backwards constantly to never let it get close (but also, never get away),
-# and you're always left wondering where the hell it went
+# and you're always left wondering where the hell it went.
+# it never sabotages itself. imagine hearing it scuttle up in front of you,
+# but instead of seeing it poke its face out and stop, its footsteps just stop,
+# and you KNOW it's waiting behind that wall for you
 
 # horror game where you search the dark corridors of a randomly generated maze
 # (made with randomized depth-first search) while keeping an inconsistent
