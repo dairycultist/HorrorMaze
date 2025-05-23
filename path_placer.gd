@@ -3,14 +3,20 @@ extends Node
 # basement https://www.youtube.com/watch?v=dRwbjwCj1oY
 
 # monster only moves when not rendered:
+# https://stackoverflow.com/questions/77775728/display-different-materials-textures-on-different-camera3ds
 # rendering the object to a secondary viewport and comparing pixels
+
 # fast footstep sounds
 # https://www.tiktok.com/@graggl_/video/7471697355100654891
 
-#weeping angel that will never willingly move into your line of sight
-#I think that's the problem with game weeping angels, they just turn the corner and just stop, so you can always just walk backwards
-#the weeping angel should try to reach you, realize it can't, and then skitter off, leaving you wondering where it went
-#maybe it waits at the corner. if it hears you try to get closer, it skitters away before you see it. if it hears you moving away, then it camps the corner until it knows you're looking away
+# the weeping angel should never willingly move into your line of sight.
+# if it tries and fails to move because doing so would move it into your
+# line of sight, it should pause for a moment.
+# - if it hears you try to get closer, it skitters away before you see it
+# - if it hears you moving away, then it camps the corner until it knows you're looking away
+# that's the gimmick. you almost never see the angel, you can't just walk
+# backwards constantly to never let it get close (but also, never get away),
+# and you're always left wondering where the hell it went
 
 # horror game where you search the dark corridors of a randomly generated maze
 # (made with randomized depth-first search) while keeping an inconsistent
